@@ -1,0 +1,11 @@
+{
+	"name": "@types/jsmacros",
+	"version": "1.6.4",
+	"description": "TypeScript definitions for JsMacros 1.6.4",
+	"license": "MPL 2.0",
+	"author": "wagyourtail",
+	"main": "",
+	"scripts": {},
+	"dependencies": {},
+	"tsName": "JsMacros-1.6.4-beta-a06860c.d.ts"
+}
