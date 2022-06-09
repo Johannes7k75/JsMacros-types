@@ -1,11 +1,10 @@
 {
 	"name": "@types/jsmacros",
-	"version": "1.6.5",
-	"description": "TypeScript definitions for JsMacros 1.6.5",
+	"description": "TypeScript definitions for JsMacros undefined",
 	"license": "MPL 2.0",
 	"author": "wagyourtail",
 	"main": "",
 	"scripts": {},
 	"dependencies": {},
-	"tsName": "JsMacros-1.6.5-beta-4b1740b.d.ts"
+	"tsName": "JsMacros-1.7.0.d.ts"
 }
