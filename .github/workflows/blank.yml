@@ -5,101 +5,57 @@ on:
   [workflow_dispatch,push]
 
 jobs:
-
   build:
-
     runs-on: ubuntu-latest
-
     steps:
-
     - uses: actions/checkout@v2
-
     - run: rm -rf dist
-
     - uses: actions/github-script@v5
-
       env: 
-
         token: ${{secrets.GITHUB_TOKEN}}
 
       with:
-
         script: |
-
               const { execSync } = require("child_process");
-
               const fs = require('fs')
-
               let tsName
-
               let artifact = await github.request('GET /repos/{owner}/{repo}/actions/artifacts', {
-
                   owner: 'wagyourtail',
-
                   repo: 'JsMacros'
-
               }).then(res => res.data.artifacts[0])
 
               let name = artifact.name.split('-')
-
               let version = name[2]
-
               let json = await github.request('GET /repos/{owner}/{repo}/actions/artifacts/{artifact_id}/{archive_format}', {
-
                   owner: 'wagyourtail',
-
                   repo: 'JsMacros',
-
                   artifact_id: artifact.id,
-
                   archive_format: 'zip'
-
               })
-
+              
               fs.writeFileSync('./archieve.zip', Buffer.from(json.data))
-
               execSync("unzip archieve.zip typescript/headers/*")
-
               execSync("mkdir dist && mv ./typescript/headers/* ./dist ")
-
               fs.readdirSync('./dist').forEach(file => {
-
                   if (file.toLowerCase().startsWith('jsmacros')) {
-
                       return tsName = file
-
                   }
-
               })
 
               // version, tsName
-
               file = { name: "@types/jsmacros", "version": version, "description": `TypeScript definitions for JsMacros ${version}`, "license": "MPL 2.0", "author": "wagyourtail", "main": "", "scripts": {}, "dependencies": {}, tsName }
-
               fs.writeFileSync("./dist/package.json", JSON.stringify(file, null, "\t"))
-
               execSync("cp ./dist/* .")
 
     - uses: actions/upload-artifact@v2
-
       with:
-
           name: package
-
           path: ./dist
-
     - run: rm -rf archieve.zip typescript dist
-
-     
-
+    
     - name: Update resources
-
       uses: test-room-7/action-update-file@v1
-
       with:
-
         file-path: ./*
-
         commit-msg: Update resources
-
         github-token: ${{ secrets.GITHUB_TOKEN }} 
